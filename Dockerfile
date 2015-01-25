@@ -28,5 +28,4 @@ VOLUME ["/build", "/tftpboot"]
 
 WORKDIR /build
 
-ENTRYPOINT ["/bin/bash"]
-CMD []
+CMD ["/bin/bash"]
