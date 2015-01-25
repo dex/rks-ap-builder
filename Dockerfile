@@ -23,3 +23,10 @@ RUN apt-get install -y zlib1g-dev:i386 gcc
 RUN echo "LC_ALL=\"en_US.UTF-8\"" >> /etc/default/locale
 RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8
+
+VOLUME ["/build", "/tftpboot"]
+
+WORKDIR /build
+
+ENTRYPOINT ["/bin/bash"]
+CMD []
