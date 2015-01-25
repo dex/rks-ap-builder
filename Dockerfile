@@ -26,6 +26,6 @@ RUN update-locale LANG=en_US.UTF-8
 
 VOLUME ["/workspace", "/tftpboot"]
 
-WORKDIR /build
+WORKDIR /workspace
 
 CMD ["/bin/bash"]
