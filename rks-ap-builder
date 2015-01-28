@@ -1,0 +1,30 @@
+#!/bin/sh
+
+#######################################################################
+#                           CONFIGURATIONS                            #
+#######################################################################
+
+# Set your workspace folder
+HOST_WORKSPACE="/home/dex/Perforce"
+
+# Set your tftpboot folder
+HOST_TFTPBOOT="/tftpboot"
+
+
+#######################################################################
+#     !!! DO NOT MODIFY THE FOLLOWING VARIABLES AND COMMANDS !!!      #
+#######################################################################
+# {{{
+gen_dns_opts()
+{
+    for dn in "$1"; do
+	echo -n "--dns ${dn} "
+    done
+}
+
+DNS="172.17.17.16 172.17.17.18"
+
+docker run --rm -t -i $(gen_dns_opts ${DNS}) -h rks-ap-builder \
+    -v ${HOST_TFTPBOOT}:/tftpboot -v ${HOST_WORKSPACE}:/workspace \
+    dex0827/rks-ap-builder
+# }}}
