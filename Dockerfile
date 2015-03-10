@@ -12,6 +12,9 @@ RUN apt-get install -y build-essential bison atfs autoconf flex gettext libncurs
 # For build MQTT
 RUN apt-get install -y python2.7
 
+# For ARM-QCA
+RUN apt-get install -y uuid-dev uboot-mkimage
+
 # For tensilica (i386 binary)
 # We have to install gcc here due to gcc will be removed due to i386 libc
 RUN apt-get install -y zlib1g-dev:i386 gcc
