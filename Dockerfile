@@ -22,7 +22,7 @@ RUN apt-get install -y zlib1g-dev:i386 gcc
 # For ZD JAVA applet (Optional)
 #RUN apt-get install -y ant openjdk-6-jdk openjdk-7-jdk
 
-# Set an utf-8 locale (needed by uCblic)
+# Set an utf-8 locale (needed by uClibc)
 RUN echo "LC_ALL=\"en_US.UTF-8\"" >> /etc/default/locale
 RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8
