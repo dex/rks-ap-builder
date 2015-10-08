@@ -25,6 +25,6 @@ gen_dns_opts()
 DNS="172.17.17.16 172.17.17.18"
 
 docker run --rm -t -i $(gen_dns_opts ${DNS}) -h rks-ap-builder \
-    -v ${HOST_TFTPBOOT}:/tftpboot -v ${HOST_WORKSPACE}:/workspace \
-    dex0827/rks-ap-builder
+    -v ${HOST_TFTPBOOT}:/tftpboot -v ${HOST_WORKSPACE}:/vagrant \
+    rks-ap-builder "$@"
 # }}}
