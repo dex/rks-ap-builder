@@ -1,8 +1,10 @@
 FROM ubuntu:precise
 MAINTAINER Dex Chen "dex.chen@ruckuswireless.com"
 
+ARG uid=1000
+
 ENV BUILD_USER vagrant
-ENV BUILD_UID 1000
+ENV BUILD_UID $uid
 
 RUN apt-get update -y
 
