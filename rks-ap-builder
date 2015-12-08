@@ -5,10 +5,10 @@
 #######################################################################
 
 # Set your workspace folder. (It will be mounted at /vagrant in docker)
-HOST_WORKSPACE="/home/dex/Perforce"
+#HOST_WORKSPACE="/home/dex/Perforce"
 
 # Set your tftpboot folder. (it will be mounted at /tftpboot in docker)
-HOST_TFTPBOOT="/tftpboot"
+#HOST_TFTPBOOT="/tftpboot"
 
 
 #######################################################################
@@ -80,6 +80,15 @@ gen_dns_opts()
 }
 
 DNS="172.17.17.16 172.17.17.18"
+
+if [ -f ${HOME}/.rks-ap-builder ]; then
+    . ${HOME}/.rks-ap-builder
+fi
+
+if [ -z "${HOST_TFTPBOOT}" -o -z "${HOST_WORKSPACE}" ]; then
+    echo "Please define HOST_TFTPBOOT and HOST_WORKSPACE in $HOME/.rks-ap-builder or environment variables"
+    exit 1
+fi
 
 docker run --rm -t -i $(gen_dns_opts ${DNS}) -h $name \
     -v ${HOST_TFTPBOOT}:/tftpboot -v ${HOST_WORKSPACE}:/vagrant \
