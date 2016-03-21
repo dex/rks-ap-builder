@@ -20,14 +20,12 @@ name=rks-ap-builder
 img=$(docker images -q $name)
 
 if [ ! -n "$img" ]; then
-	docker build --build-arg uid=$(id -u) -t $name - <<"EOF"
+	docker build -t $name --rm=true - <<EOF
 FROM ubuntu:precise
 MAINTAINER Dex Chen "dex.chen@ruckuswireless.com"
 
-ARG uid=1000
-
 ENV BUILD_USER vagrant
-ENV BUILD_UID $uid
+ENV BUILD_UID $(id -u)
 
 RUN apt-get update -y
 
@@ -35,7 +33,7 @@ RUN apt-get update -y
 RUN apt-get install -y libc6-i386 lib32stdc++6
 
 # Common
-RUN apt-get install -y build-essential bison atfs autoconf flex gettext libncurses5-dev ctags sharutils zlib1g-dev gawk texinfo rsync
+RUN apt-get install -y build-essential bison atfs autoconf flex gettext libncurses5-dev ctags sharutils zlib1g-dev gawk texinfo rsync xutils-dev unzip
 
 # For build MQTT
 RUN apt-get install -y python2.7
@@ -49,7 +47,7 @@ RUN apt-get install -y zlib1g-dev:i386 gcc
 
 # For sudo
 RUN apt-get install -y sudo
-RUN echo "$BUILD_USER ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN echo "\$BUILD_USER ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # For ZD JAVA applet (Optional)
 #RUN apt-get install -y ant openjdk-6-jdk openjdk-7-jdk
@@ -60,7 +58,7 @@ RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8
 
 # Create build user
-RUN useradd -m -s /bin/bash -N -u $BUILD_UID $BUILD_USER
+RUN useradd -m -s /bin/bash -N -u \$BUILD_UID \$BUILD_USER
 
 VOLUME ["/vagrant", "/tftpboot"]
 
