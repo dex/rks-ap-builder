@@ -33,7 +33,7 @@ RUN apt-get update -y
 RUN apt-get install -y libc6-i386 lib32stdc++6
 
 # Common
-RUN apt-get install -y build-essential bison atfs autoconf flex gettext libncurses5-dev ctags sharutils zlib1g-dev gawk texinfo rsync xutils-dev unzip
+RUN apt-get install -y build-essential bison atfs autoconf flex gettext libncurses5-dev ctags sharutils zlib1g-dev gawk texinfo rsync xutils-dev unzip libtool
 
 # For build MQTT
 RUN apt-get install -y python2.7
