@@ -21,7 +21,7 @@ img=$(docker images -q $name)
 
 if [ ! -n "$img" ]; then
 	docker build -t $name --rm=true - <<EOF
-FROM ubuntu:precise
+FROM ubuntu:16.04
 MAINTAINER Dex Chen "dex.chen@ruckuswireless.com"
 
 ENV BUILD_USER vagrant
@@ -33,17 +33,18 @@ RUN apt-get update -y
 RUN apt-get install -y libc6-i386 lib32stdc++6
 
 # Common
-RUN apt-get install -y build-essential bison atfs autoconf flex gettext libncurses5-dev ctags sharutils zlib1g-dev gawk texinfo rsync xutils-dev zip unzip libtool
+RUN apt-get install -y build-essential bison atfs autoconf flex gettext libncurses5-dev ctags sharutils zlib1g-dev gawk texinfo rsync xutils-dev zip unzip libtool bc wget
 
 # For build MQTT
-RUN apt-get install -y python2.7
+RUN apt-get install -y python
 
 # For ARM-QCA
-RUN apt-get install -y uuid-dev uboot-mkimage
+RUN apt-get install -y uuid-dev u-boot-tools
 
 # For tensilica (i386 binary)
 # We have to install gcc here due to gcc will be removed due to i386 libc
-RUN apt-get install -y zlib1g-dev:i386 gcc
+#RUN apt-get install -y zlib1g-dev:i386 gcc
+RUN apt-get install -y zlib1g-dev
 
 # For sudo
 RUN apt-get install -y sudo
@@ -53,6 +54,7 @@ RUN echo "\$BUILD_USER ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 #RUN apt-get install -y ant openjdk-6-jdk openjdk-7-jdk
 
 # Set an utf-8 locale (needed by uClibc)
+RUN apt-get install -y locales
 RUN echo "LC_ALL=\"en_US.UTF-8\"" >> /etc/default/locale
 RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8
