@@ -21,7 +21,7 @@ img=$(docker images -q $name)
 
 if [ ! -n "$img" ]; then
 	docker build -t $name --rm=true - <<EOF
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 MAINTAINER Dex Chen "dex.chen@ruckuswireless.com"
 
 ENV BUILD_USER vagrant
@@ -33,18 +33,17 @@ RUN apt-get update -y
 RUN apt-get install -y libc6-i386 lib32stdc++6
 
 # Common
-RUN apt-get install -y build-essential bison atfs autoconf flex gettext libncurses5-dev ctags sharutils zlib1g-dev gawk texinfo rsync xutils-dev zip unzip libtool bc wget
+RUN apt-get install -y build-essential bison atfs autoconf flex gettext libncurses5-dev ctags sharutils zlib1g-dev gawk texinfo rsync xutils-dev zip unzip libtool bc wget curl
 
 # For build MQTT
 RUN apt-get install -y python
 
 # For ARM-QCA
-RUN apt-get install -y uuid-dev u-boot-tools
+RUN apt-get install -y uuid-dev u-boot-tools device-tree-compiler
 
 # For tensilica (i386 binary)
 # We have to install gcc here due to gcc will be removed due to i386 libc
 #RUN apt-get install -y zlib1g-dev:i386 gcc
-RUN apt-get install -y zlib1g-dev
 
 # For sudo
 RUN apt-get install -y sudo
